@@ -3,6 +3,7 @@ import SearchBar from './components/SearchBar';
 import WeatherDisplay from './components/WeatherDisplay';
 import { weatherAPI } from './services/weatherAPI';
 import { Cloud, MapPin } from 'lucide-react';
+import KenyaWeatherMap from './components/KenyaWeatherMap';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -10,6 +11,7 @@ function App() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState(null);
+  const [showMap, setShowMap] = useState(false);
 
   const handleSearch = async (searchTerm) => {
     setLoading(true);
@@ -71,12 +73,28 @@ function App() {
               </h1>
               <p className="text-gray-600">Real-time weather information across Kenya</p>
             </div>
+            <button
+              onClick={() => setShowMap(!showMap)}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            >
+              {showMap ? 'Hide Map' : 'Show Country Map'}
+            </button>
           </div>
+          
         </div>
       </header>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-12">
+
+        {showMap && (
+          <div className="mb-8">
+          
+             <KenyaWeatherMap />
+          </div>
+          )}
+
+
         {/* Search Bar */}
         <div className="flex flex-col items-center">
           <SearchBar onSearch={handleSearch} loading={loading} />
